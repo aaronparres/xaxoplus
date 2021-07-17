@@ -60,4 +60,6 @@ export const {
   useGetPopularSeriesQuery,
   useGetSearchMoviesQuery,
   useGetSearchSeriesQuery,
+  useLazyGetSearchMoviesQuery,
+  useLazyGetSearchSeriesQuery,
 } = tmdbApi;
