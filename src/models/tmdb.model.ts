@@ -1,6 +1,6 @@
 import {
-  DiscoverMovieResponse as PopularMoviesResponse,
-  DiscoverTvResponse as PopularSeriesResponse,
+  DiscoverMovieResponse as MoviesResponse,
+  DiscoverTvResponse as SeriesResponse,
 } from 'moviedb-promise/dist/request-types';
 
-export type { PopularMoviesResponse, PopularSeriesResponse };
+export type { MoviesResponse, SeriesResponse };
