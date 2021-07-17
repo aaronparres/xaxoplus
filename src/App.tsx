@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import styles from './App.module.scss';
+import Header from 'components/Header';
 
 export default function App() {
   const [literal, setLiteral] = useState('');
@@ -10,5 +10,9 @@ export default function App() {
     setLiteral('hello there');
   }, []);
 
-  return <div className={styles.app}>{literal}</div>;
+  return (
+    <div>
+      <Header title={literal} />
+    </div>
+  );
 }
