@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Switch, Route, Link, Redirect } from 'react-router-dom';
 
 import Header from 'components/Header';
+import PopularContent from 'components/PopularContent';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import {
   useGetPopularMoviesQuery,
@@ -9,7 +10,6 @@ import {
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
 } from 'store/apis/tmdb';
-import PopularContent from 'components/PopularContent';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -59,16 +59,19 @@ export default function App() {
     <div>
       <Header title="xaxo+" />
       <Switch>
-        <Route path="/home" exact>
-          {moviesError ? (
+        <Route exact path="/info/:media_type/:id">
+          <p>hello there</p>
+        </Route>
+        <Route exact path="/home">
+          {moviesError || seriesError ? (
             <>Oh no, there was an error</>
-          ) : moviesIsLoading ? (
+          ) : moviesIsLoading || seriesIsLoading ? (
             <>Loading...</>
           ) : moviesData?.results && seriesData?.results ? (
             <PopularContent movies={moviesData.results} series={seriesData.results} />
           ) : null}
         </Route>
-        <Route path="/" render={() => <Redirect to="/home" />} />
+        <Redirect to="/home" />
       </Switch>
 
       {/* <h1>SEARCH MOVIES</h1>
