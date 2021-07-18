@@ -30,7 +30,7 @@
     "selector-no-qualifying-type": [
       true,
       {
-        "ignore": ["attribute", "class", "id"]
+        "ignore": ["class"]
       }
     ],
     "order/order": ["custom-properties", "declarations"]
