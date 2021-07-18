@@ -9,8 +9,6 @@ import App from './App';
 
 import reportWebVitals from './reportWebVitals';
 
-import './index.module.scss';
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
