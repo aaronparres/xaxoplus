@@ -19,8 +19,10 @@ export const settingsSlice = createSlice({
   },
 });
 
+// SELECTORS
 export const selectName = (state: RootState): string => state.settings.name;
 
+// ACTIONS
 export const { changeName } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
