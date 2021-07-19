@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as Logo } from 'assets/svg/logo.svg';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import NavbarElement from './NavbarElement';
 
 import styles from './styles.module.scss';
 
@@ -29,10 +29,7 @@ export default function Header() {
         <Logo className={styles.logo} />
       </Link>
       <Link to="/search" className={styles.element}>
-        <div className={styles.iconWrapper}>
-          <FontAwesomeIcon icon={faSearch} color="white" />
-        </div>
-        <p className={styles.element__title}>SEARCH</p>
+        <NavbarElement text="SEARCH" color="white" icon={faSearch} />
       </Link>
     </nav>
   );

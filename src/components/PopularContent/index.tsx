@@ -7,6 +7,7 @@ import { selectSwitchMediaType } from 'store/slices/settings';
 import defaultPoster from 'assets/images/default-poster.png';
 
 import styles from './styles.module.scss';
+import MediaElement from 'components/MediaElement';
 
 interface PopularContentProps {
   movies?: MovieResult[];
@@ -26,23 +27,19 @@ export default function PopularContent({ movies, series }: PopularContentProps) 
       {switchValue === 'movie' && (
         <>
           {movies?.map((media, index) => (
-            <article
+            <MediaElement
               key={index}
-              className={styles.imageElement}
-              onClick={() => handleImageClick(`/info/movie/${media.id}`)}
-            >
-              {media.poster_path === null ? (
-                <img src={defaultPoster} />
-              ) : (
-                <img src={`https://image.tmdb.org/t/p/w500/${media.poster_path}`} />
-              )}
-              <div className={styles.mediaVoteAvrg}>
-                <p>{media.vote_average}</p>
-              </div>
-              <div className={styles.mediaTitle}>
-                <h3>{media.original_title}</h3>
-              </div>
-            </article>
+              handleRedirection={() =>
+                handleImageClick(`/info/${switchValue}/${media.id}`)
+              }
+              voteAvrg={media.vote_average}
+              title={media.original_title}
+              image={
+                media.poster_path === null
+                  ? defaultPoster
+                  : `https://image.tmdb.org/t/p/w500/${media.poster_path}`
+              }
+            />
           ))}
         </>
       )}
@@ -50,26 +47,20 @@ export default function PopularContent({ movies, series }: PopularContentProps) 
       {switchValue === 'tv' && (
         <>
           {series?.map((media, index) => (
-            <article
+            <MediaElement
               key={index}
-              className={styles.imageElement}
-              onClick={() => handleImageClick(`/info/tv/${media.id}`)}
-            >
-              <img
-                src={`${
-                  media.poster_path === null
-                    ? defaultPoster
-                    : `https://image.tmdb.org/t/p/w500/${media.poster_path}`
-                }`}
-              />
-              <div className={styles.mediaVoteAvrg}>
-                <p>{media.vote_average}</p>
-              </div>
-              <div className={styles.mediaTitle}>
-                <h3>{media.name}</h3>
-              </div>
-            </article>
-          ))}{' '}
+              handleRedirection={() =>
+                handleImageClick(`/info/${switchValue}/${media.id}`)
+              }
+              voteAvrg={media.vote_average}
+              title={media.name}
+              image={
+                media.poster_path === null
+                  ? defaultPoster
+                  : `https://image.tmdb.org/t/p/w500/${media.poster_path}`
+              }
+            />
+          ))}
         </>
       )}
     </div>

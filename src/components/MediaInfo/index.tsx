@@ -6,6 +6,8 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { useLazyGetInfoMovieQuery, useLazyGetInfoSerieQuery } from 'store/apis/tmdb';
 import Spinner from 'components/UI/Spinner';
 
+import styles from './styles.module.scss';
+
 interface ParamTypes {
   media_type: string;
   id: string;
@@ -32,10 +34,7 @@ export default function MediaInfo() {
   }, []);
 
   return (
-    <div>
-      <div onClick={() => history.goBack()}>
-        <FontAwesomeIcon icon={faAngleLeft} size="lg" color="white" />
-      </div>
+    <div className={styles.container}>
       {media_type === 'movie' && movieError ? (
         <>Oh no, there was an error</>
       ) : movieIsLoading ? (
