@@ -50,9 +50,17 @@ export const tmdbApi = createApi({
         },
       }),
     }),
-    getMediaInfo: builder.query({
-      query: ({ media_type, id }) => ({
-        url: `${media_type}/${id}`,
+    getInfoMovie: builder.query<MovieResult, string>({
+      query: (id: string) => ({
+        url: `movie/${id}`,
+        params: {
+          ...COMMON_QUERY_PARAMS,
+        },
+      }),
+    }),
+    getInfoSerie: builder.query<TvResult, string>({
+      query: (id: string) => ({
+        url: `tv/${id}`,
         params: {
           ...COMMON_QUERY_PARAMS,
         },
@@ -68,5 +76,6 @@ export const {
   useGetPopularSeriesQuery,
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
-  useGetMediaInfoQuery,
+  useLazyGetInfoMovieQuery,
+  useLazyGetInfoSerieQuery,
 } = tmdbApi;

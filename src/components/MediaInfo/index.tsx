@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
-import { useGetMediaInfoQuery } from 'store/apis/tmdb';
-import { MovieResult, TvResult } from 'models/tmdb.model';
+
+import { useLazyGetInfoMovieQuery, useLazyGetInfoSerieQuery } from 'store/apis/tmdb';
 
 interface ParamTypes {
   media_type: string;
@@ -14,10 +14,20 @@ export default function MediaInfo() {
   const history = useHistory();
   const { media_type, id } = useParams<ParamTypes>();
 
-  const { data, error, isLoading } = useGetMediaInfoQuery({ media_type, id });
+  const [
+    triggerMovie,
+    { data: movieData, error: movieError, isLoading: movieIsLoading },
+  ] = useLazyGetInfoMovieQuery();
+
+  const [
+    triggerSerie,
+    { data: serieData, error: serieError, isLoading: serieIsLoading },
+  ] = useLazyGetInfoSerieQuery();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (media_type === 'movie') triggerMovie(id);
+    if (media_type === 'tv') triggerSerie(id);
   }, []);
 
   return (
@@ -25,17 +35,24 @@ export default function MediaInfo() {
       <div onClick={() => history.goBack()}>
         <FontAwesomeIcon icon={faAngleLeft} size="lg" color="white" />
       </div>
-      {error ? (
+      {media_type === 'movie' && movieError ? (
         <>Oh no, there was an error</>
-      ) : isLoading ? (
+      ) : movieIsLoading ? (
         <>Loading...</>
-      ) : data ? (
+      ) : movieData ? (
         <>
-          <h1>{data.name && data.name}</h1>
-          <h1>{data.original_title && data.original_title}</h1>
+          <h1>{movieData?.original_title}</h1>
         </>
       ) : null}
-      {id}
+      {media_type === 'tv' && serieError ? (
+        <>Oh no, there was an error</>
+      ) : serieIsLoading ? (
+        <>Loading...</>
+      ) : serieData ? (
+        <>
+          <h1>{serieData?.name}</h1>
+        </>
+      ) : null}
     </div>
   );
 }
