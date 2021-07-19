@@ -1,7 +1,7 @@
 .nav {
   align-items: center;
-  background-color: #090b13;
   display: flex;
+  background-color: none;
   height: 20px;
   justify-content: space-between;
   padding: 20px;
@@ -9,6 +9,12 @@
   top: 0;
   width: 100%;
   z-index: 1;
+  transition: all 0.5s;
+  transition-timing-function: ease-in;
+
+  &.showTab {
+    background-color: #090b13;
+  }
 
   .logo {
     margin-right: 1rem;
