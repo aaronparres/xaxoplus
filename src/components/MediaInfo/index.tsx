@@ -1,10 +1,15 @@
 import { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-
-import { useLazyGetInfoMovieQuery, useLazyGetInfoSerieQuery } from 'store/apis/tmdb';
+import { useParams } from 'react-router-dom';
+import {
+  useLazyGetInfoMovieQuery,
+  useLazyGetInfoSerieQuery,
+  useLazyGetSimilarMoviesQuery,
+  useLazyGetSimilarSeriesQuery,
+} from 'store/apis/tmdb';
 import Spinner from 'components/UI/Spinner';
+import Info from './Info';
+
+import defaultPoster from 'assets/images/default-poster.png';
 
 import styles from './styles.module.scss';
 
@@ -14,7 +19,6 @@ interface ParamTypes {
 }
 
 export default function MediaInfo() {
-  const history = useHistory();
   const { media_type, id } = useParams<ParamTypes>();
 
   const [
@@ -27,31 +31,75 @@ export default function MediaInfo() {
     { data: serieData, error: serieError, isLoading: serieIsLoading },
   ] = useLazyGetInfoSerieQuery();
 
+  const [
+    triggerSimilarMovies,
+    {
+      data: movieSimilarData,
+      error: movieSimilarError,
+      isLoading: movieSimilarIsLoading,
+    },
+  ] = useLazyGetSimilarMoviesQuery();
+
+  const [
+    triggerSimilarSeries,
+    {
+      data: serieSimilarData,
+      error: serieSimilarError,
+      isLoading: serieSimilarIsLoading,
+    },
+  ] = useLazyGetSimilarSeriesQuery();
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (media_type === 'movie') triggerMovie(id);
-    if (media_type === 'tv') triggerSerie(id);
+    if (media_type === 'movie') {
+      triggerMovie(id);
+      triggerSimilarMovies(id);
+    }
+    if (media_type === 'tv') {
+      triggerSerie(id);
+      triggerSimilarSeries(id);
+    }
   }, []);
 
   return (
     <div className={styles.container}>
-      {media_type === 'movie' && movieError ? (
+      {(media_type === 'movie' && movieError) || movieSimilarError ? (
         <>Oh no, there was an error</>
-      ) : movieIsLoading ? (
+      ) : movieIsLoading && movieSimilarIsLoading ? (
         <Spinner />
-      ) : movieData ? (
-        <>
-          <h1>{movieData?.original_title}</h1>
-        </>
+      ) : movieData && movieSimilarData ? (
+        <Info
+          type={media_type}
+          title={movieData.original_title}
+          voteAvrg={movieData.vote_average}
+          year={movieData.release_date}
+          overview={movieData.overview}
+          image={
+            movieData.poster_path === null
+              ? defaultPoster
+              : `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`
+          }
+          movieRecomendations={movieSimilarData.results}
+        />
       ) : null}
-      {media_type === 'tv' && serieError ? (
+      {(media_type === 'tv' && serieError) || serieSimilarError ? (
         <>Oh no, there was an error</>
-      ) : serieIsLoading ? (
+      ) : serieIsLoading && serieSimilarIsLoading ? (
         <Spinner />
-      ) : serieData ? (
-        <>
-          <h1>{serieData?.name}</h1>
-        </>
+      ) : serieData && serieSimilarData ? (
+        <Info
+          type={media_type}
+          title={serieData.name}
+          voteAvrg={serieData.vote_average}
+          year={serieData.first_air_date}
+          overview={serieData.overview}
+          image={
+            serieData.poster_path === null
+              ? defaultPoster
+              : `https://image.tmdb.org/t/p/w500/${serieData.poster_path}`
+          }
+          serieRecomendations={serieSimilarData.results}
+        />
       ) : null}
     </div>
   );
