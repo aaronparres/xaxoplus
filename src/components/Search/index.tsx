@@ -1,16 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
 } from 'store/apis/tmdb';
+import { MovieResult, TvResult } from 'models/tmdb.model';
+import {
+  saveToPreviousSearchMovies,
+  saveToPreviousSearchSeries,
+  selectPreviousSearchElements,
+} from 'store/slices/settings';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 
 export default function Search() {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const [queryMovies, setQueryMovies] = useState('');
-  const [querySeries, setQuerySeries] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const previousSearch = useAppSelector(selectPreviousSearchElements);
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -31,55 +39,61 @@ export default function Search() {
     },
   ] = useLazyGetSearchSeriesQuery();
 
-  const handleInputSearch = (inputQuery: string, media_type: string) => {
-    if (media_type === 'movie') {
-      setQueryMovies(inputQuery);
-      triggerSearchMovies(inputQuery);
-    }
-    if (media_type === 'tv') {
-      setQuerySeries(inputQuery);
-      triggerSearchSeries(inputQuery);
-    }
+  const handleInputSearch = (inputQuery: string) => {
+    setSearchQuery(inputQuery);
+    triggerSearchMovies(inputQuery);
+    triggerSearchSeries(inputQuery);
   };
+
+  const handleSearchMovieSelection = (data: MovieResult, type: string) => {
+    dispatch(saveToPreviousSearchMovies({ data }));
+    history.push(`/info/${type}/${data.id}`);
+  };
+
+  const handleSearchSerieSelection = (data: TvResult, type: string) => {
+    dispatch(saveToPreviousSearchSeries({ data }));
+    history.push(`/info/${type}/${data.id}`);
+  };
+
   return (
     <div>
       <p>search</p>
       <div onClick={() => history.goBack()}>
         <FontAwesomeIcon icon={faTimes} size="lg" color="white" />
       </div>
-      <h1>SEARCH MOVIES</h1>
       <input
         type="text"
-        value={queryMovies}
+        value={searchQuery}
         style={{ color: 'grey' }}
-        onChange={e => handleInputSearch(e.target.value, 'movie')}
+        onChange={e => handleInputSearch(e.target.value)}
       />
-      {searchMoviesError ? (
-        <>Oh no, there was an error</>
-      ) : searchMoviesIsLoading ? (
-        <>Loading...</>
-      ) : searchMoviesData?.results ? (
+      {searchMoviesIsLoading && searchSeriesIsLoading && <>Loading...</>}
+      {previousSearch && (
+        <>
+          {previousSearch.movies.map((movie, index) => (
+            <p key={index}>{movie.original_title}</p>
+          ))}
+          {previousSearch.series.map((serie, index) => (
+            <p key={index}>{serie.name}</p>
+          ))}
+        </>
+      )}
+      _________________
+      {searchMoviesError ? null : searchMoviesData?.results ? (
         <>
           {searchMoviesData.results.map((movie, index) => (
-            <h4 key={index}>{movie.original_title}</h4>
+            <div onClick={() => handleSearchMovieSelection(movie, 'movie')} key={index}>
+              <h4>{movie.original_title}</h4>
+            </div>
           ))}
         </>
       ) : null}
-      <h1>SEARCH SERIES</h1>
-      <input
-        type="text"
-        value={querySeries}
-        style={{ color: 'grey' }}
-        onChange={e => handleInputSearch(e.target.value, 'tv')}
-      />
-      {searchSeriesError ? (
-        <>Oh no, there was an error</>
-      ) : searchSeriesIsLoading ? (
-        <>Loading...</>
-      ) : searchSeriesData?.results ? (
+      {searchSeriesError ? null : searchSeriesData?.results ? (
         <>
           {searchSeriesData.results.map((serie, index) => (
-            <h4 key={index}>{serie.name}</h4>
+            <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
+              <h4>{serie.name}</h4>
+            </div>
           ))}
         </>
       ) : null}
