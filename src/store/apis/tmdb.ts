@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { MoviesResponse, SeriesResponse } from 'models/tmdb.model';
+import { MoviesResponse, SeriesResponse, MovieResult, TvResult } from 'models/tmdb.model';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -50,6 +50,14 @@ export const tmdbApi = createApi({
         },
       }),
     }),
+    getMediaInfo: builder.query({
+      query: ({ media_type, id }) => ({
+        url: `${media_type}/${id}`,
+        params: {
+          ...COMMON_QUERY_PARAMS,
+        },
+      }),
+    }),
   }),
 });
 
@@ -58,8 +66,7 @@ export const tmdbApi = createApi({
 export const {
   useGetPopularMoviesQuery,
   useGetPopularSeriesQuery,
-  useGetSearchMoviesQuery,
-  useGetSearchSeriesQuery,
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
+  useGetMediaInfoQuery,
 } = tmdbApi;
