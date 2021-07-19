@@ -1,9 +1,10 @@
 import { useGetPopularMoviesQuery, useGetPopularSeriesQuery } from 'store/apis/tmdb';
 
-import Switch from 'components/UI/Switch';
+import ButtonRow from 'components/ButtonRow';
 import PopularContent from 'components/PopularContent';
 import Spinner from 'components/UI/Spinner';
-import { useAppDispatch } from 'hooks/redux';
+
+import styles from './styles.module.scss';
 
 export default function Home() {
   const {
@@ -19,7 +20,9 @@ export default function Home() {
 
   return (
     <div>
-      <Switch />
+      <div className={styles.buttonRowContainer}>
+        <ButtonRow />
+      </div>
       {moviesIsLoading && seriesIsLoading ? (
         <Spinner />
       ) : moviesError || seriesError ? (
