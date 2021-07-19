@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Hind');
-
 .footer {
   align-items: center;
   background-color: #000;
@@ -11,28 +9,22 @@
   width: 100%;
   z-index: 1;
 
-  .footer__logo {
+  .logo {
     margin: 0 auto 10px;
     object-fit: contain;
     width: 2rem;
   }
 
-  .footer__terms {
-    box-pack: center;
+  .terms {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     margin: 15px auto;
 
-    .footer__termsElements {
-      font-family: 'Hind', sans-serif;
+    &__element {
       font-size: 0.8rem;
       margin: 11px 10px 10px;
+      cursor: pointer;
     }
-  }
-
-  p {
-    color: #fff;
-    font-size: 1rem;
   }
 }

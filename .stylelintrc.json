@@ -9,6 +9,7 @@
     "selector-max-id": 1,
     "number-leading-zero": null,
     "max-nesting-depth": 3,
+    "order/properties-alphabetical-order": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {

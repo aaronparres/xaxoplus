@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
-
 .nav {
   align-items: center;
   background-color: #090b13;
   display: flex;
-  height: 40px;
+  height: 20px;
   justify-content: space-between;
   padding: 20px;
   position: fixed;
@@ -12,49 +10,54 @@
   width: 100%;
   z-index: 1;
 
-  .nav__logo {
+  .logo {
     margin-right: 1rem;
     object-fit: contain;
     width: 7rem;
   }
 
-  .nav__element {
+  a > .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .element {
     align-items: center;
     display: flex;
     flex-direction: row;
-    font-family: 'Montserrat', sans-serif;
     font-weight: 900;
     justify-content: flex-end;
     margin-right: 2rem;
     text-decoration: none;
+
+    &__title {
+      display: none;
+    }
   }
 
-  .nav__iconWrapper {
+  .iconWrapper {
     align-items: center;
     display: flex;
     margin-right: 0.5rem;
   }
 
-  p.nav__elementTitle {
-    display: none;
-  }
-
   @media (min-width: 479px) {
+    height: 40px;
     justify-content: space-between;
 
-    .nav__logo {
+    .logo {
       margin-left: 0.5rem;
       width: 10rem;
     }
 
-    .nav__element {
+    .element {
       margin-right: 3rem;
-    }
 
-    p.nav__elementTitle {
-      color: #fff;
-      display: block;
-      font-size: 1rem;
+      &__title {
+        color: #fff;
+        display: block;
+        font-size: 1rem;
+      }
     }
   }
 }

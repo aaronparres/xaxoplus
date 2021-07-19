@@ -9,13 +9,13 @@ export default function Header() {
   return (
     <nav className={styles.nav}>
       <Link to="/home">
-        <Logo className={styles.nav__logo} />
+        <Logo className={styles.logo} />
       </Link>
-      <Link to="/search" className={styles.nav__element}>
-        <div className={styles.nav__iconWrapper}>
+      <Link to="/search" className={styles.element}>
+        <div className={styles.iconWrapper}>
           <FontAwesomeIcon icon={faSearch} color="white" />
         </div>
-        <p className={styles.nav__elementTitle}>SEARCH</p>
+        <p className={styles.element__title}>SEARCH</p>
       </Link>
     </nav>
   );

@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import {
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
@@ -11,6 +11,8 @@ export default function Search() {
   const history = useHistory();
   const [queryMovies, setQueryMovies] = useState('');
   const [querySeries, setQuerySeries] = useState('');
+
+  useEffect(() => window.scrollTo(0, 0), []);
 
   const [
     triggerSearchMovies,
@@ -49,6 +51,7 @@ export default function Search() {
       <input
         type="text"
         value={queryMovies}
+        style={{ color: 'grey' }}
         onChange={e => handleInputSearch(e.target.value, 'movie')}
       />
       {searchMoviesError ? (
@@ -66,6 +69,7 @@ export default function Search() {
       <input
         type="text"
         value={querySeries}
+        style={{ color: 'grey' }}
         onChange={e => handleInputSearch(e.target.value, 'tv')}
       />
       {searchSeriesError ? (
