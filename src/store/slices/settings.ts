@@ -22,10 +22,18 @@ export const settingsSlice = createSlice({
       state.mediaType = action.payload;
     },
     saveToPreviousSearchMovies: (state, action: PayloadAction<{ data: MovieResult }>) => {
+      const isAlreadySaved = state.previousSearchMovies.some(
+        movie => movie.id === action.payload.data.id,
+      );
+      if (isAlreadySaved) return;
       if (state.previousSearchMovies.length > 4) state.previousSearchMovies.shift();
       state.previousSearchMovies.push(action.payload.data);
     },
     saveToPreviousSearchSeries: (state, action: PayloadAction<{ data: TvResult }>) => {
+      const isAlreadySaved = state.previousSearchSeries.some(
+        serie => serie.id === action.payload.data.id,
+      );
+      if (isAlreadySaved) return;
       if (state.previousSearchSeries.length > 4) state.previousSearchSeries.shift();
       state.previousSearchSeries.push(action.payload.data);
     },
