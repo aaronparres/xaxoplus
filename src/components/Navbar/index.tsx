@@ -29,7 +29,12 @@ export default function Header() {
         <Logo className={styles.logo} />
       </Link>
       <Link to="/search" className={styles.element}>
-        <NavbarElement text="SEARCH" color="white" icon={faSearch} />
+        <NavbarElement
+          text="SEARCH"
+          color="white"
+          icon={faSearch}
+          titleStyles={styles.element__title}
+        />
       </Link>
     </nav>
   );

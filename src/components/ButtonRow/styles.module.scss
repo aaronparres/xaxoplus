@@ -6,22 +6,7 @@
   flex-direction: row;
   margin: 16px 0 10px;
 
-  .buttonIdle {
-    font-size: 1.1rem;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.4;
-    cursor: pointer;
-    display: inline-block;
-    font-weight: 800;
-    letter-spacing: 2px;
-    margin: 0 40px;
-    padding-bottom: 15px;
-    position: relative;
-    text-transform: uppercase;
-    transition: all 350ms ease 0s;
-  }
-
+  .buttonIdle,
   .buttonSelected {
     font-size: 1.1rem;
     font-stretch: normal;
@@ -35,8 +20,9 @@
     padding-bottom: 15px;
     position: relative;
     text-transform: uppercase;
-    transition: all 350ms ease 0s;
+  }
 
+  .buttonSelected {
     div::after {
       background-color: rgb(249, 249, 249);
       border-radius: 50px 50px 0 0;

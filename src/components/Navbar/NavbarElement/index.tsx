@@ -7,15 +7,21 @@ interface NavbarElementProps {
   icon: IconProp;
   text: string;
   color: string;
+  titleStyles?: string;
 }
 
-export default function NavbarElement({ icon, text, color }: NavbarElementProps) {
+export default function NavbarElement({
+  icon,
+  text,
+  color,
+  titleStyles,
+}: NavbarElementProps) {
   return (
     <>
       <div className={styles.iconWrapper}>
         <FontAwesomeIcon icon={icon} color={color} />
       </div>
-      <p className={styles.element__title}>{text}</p>
+      <p className={titleStyles}>{text}</p>
     </>
   );
 }
