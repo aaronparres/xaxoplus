@@ -30,6 +30,7 @@ export default function Search() {
       isLoading: searchMoviesIsLoading,
     },
   ] = useLazyGetSearchMoviesQuery();
+
   const [
     triggerSearchSeries,
     {
@@ -71,10 +72,14 @@ export default function Search() {
       {previousSearch && (
         <>
           {previousSearch.movies.map((movie, index) => (
-            <p key={index}>{movie.original_title}</p>
+            <Link key={index} to={`/info/movie/${movie.id}`}>
+              <p>{movie.original_title}</p>
+            </Link>
           ))}
           {previousSearch.series.map((serie, index) => (
-            <p key={index}>{serie.name}</p>
+            <Link key={index} to={`/info/tv/${serie.id}`}>
+              <p>{serie.name}</p>
+            </Link>
           ))}
         </>
       )}
