@@ -66,6 +66,22 @@ export const tmdbApi = createApi({
         },
       }),
     }),
+    getSimilarMovies: builder.query<MoviesResponse, string>({
+      query: (id: string) => ({
+        url: `movie/${id}/similar`,
+        params: {
+          ...COMMON_QUERY_PARAMS,
+        },
+      }),
+    }),
+    getSimilarSeries: builder.query<SeriesResponse, string>({
+      query: (id: string) => ({
+        url: `tv/${id}/similar`,
+        params: {
+          ...COMMON_QUERY_PARAMS,
+        },
+      }),
+    }),
   }),
 });
 
@@ -78,4 +94,6 @@ export const {
   useLazyGetSearchSeriesQuery,
   useLazyGetInfoMovieQuery,
   useLazyGetInfoSerieQuery,
+  useLazyGetSimilarMoviesQuery,
+  useLazyGetSimilarSeriesQuery,
 } = tmdbApi;
