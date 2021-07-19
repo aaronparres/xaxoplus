@@ -6,6 +6,7 @@ import {
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
 } from 'store/apis/tmdb';
+import Spinner from 'components/UI/Spinner';
 import { MovieResult, TvResult } from 'models/tmdb.model';
 import {
   saveToPreviousSearchMovies,
@@ -68,7 +69,7 @@ export default function Search() {
         style={{ color: 'grey' }}
         onChange={e => handleInputSearch(e.target.value)}
       />
-      {searchMoviesIsLoading && searchSeriesIsLoading && <>Loading...</>}
+      {searchMoviesIsLoading && searchSeriesIsLoading && <Spinner />}
       {previousSearch && (
         <>
           {previousSearch.movies.map((movie, index) => (

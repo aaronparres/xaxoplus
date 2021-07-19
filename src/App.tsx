@@ -1,10 +1,10 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Navbar from 'components/Navbar';
+import Navbar from 'components/UI/Navbar';
+import Footer from 'components/UI/Footer';
 import MediaInfo from 'components/MediaInfo';
 import Search from 'components/Search';
 import Home from 'components/Home';
-import Footer from 'components/Footer';
 
 import styles from './App.module.scss';
 

@@ -1,7 +1,9 @@
 import { useGetPopularMoviesQuery, useGetPopularSeriesQuery } from 'store/apis/tmdb';
 
-import Switch from 'components/Switch';
+import Switch from 'components/UI/Switch';
 import PopularContent from 'components/PopularContent';
+import Spinner from 'components/UI/Spinner';
+import { useAppDispatch } from 'hooks/redux';
 
 export default function Home() {
   const {
@@ -19,7 +21,7 @@ export default function Home() {
     <div>
       <Switch />
       {moviesIsLoading && seriesIsLoading ? (
-        <>Loading...</>
+        <Spinner />
       ) : moviesError || seriesError ? (
         <>Oh no! There was a problem</>
       ) : moviesData?.results || seriesData?.results ? (

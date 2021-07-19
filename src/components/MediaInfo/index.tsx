@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { useLazyGetInfoMovieQuery, useLazyGetInfoSerieQuery } from 'store/apis/tmdb';
+import Spinner from 'components/UI/Spinner';
 
 interface ParamTypes {
   media_type: string;
@@ -38,7 +39,7 @@ export default function MediaInfo() {
       {media_type === 'movie' && movieError ? (
         <>Oh no, there was an error</>
       ) : movieIsLoading ? (
-        <>Loading...</>
+        <Spinner />
       ) : movieData ? (
         <>
           <h1>{movieData?.original_title}</h1>
@@ -47,7 +48,7 @@ export default function MediaInfo() {
       {media_type === 'tv' && serieError ? (
         <>Oh no, there was an error</>
       ) : serieIsLoading ? (
-        <>Loading...</>
+        <Spinner />
       ) : serieData ? (
         <>
           <h1>{serieData?.name}</h1>
