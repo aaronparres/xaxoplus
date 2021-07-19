@@ -22,6 +22,7 @@ export default function Search() {
       isLoading: searchMoviesIsLoading,
     },
   ] = useLazyGetSearchMoviesQuery();
+
   const [
     triggerSearchSeries,
     {
@@ -54,11 +55,23 @@ export default function Search() {
         style={{ color: 'grey' }}
         onChange={e => handleInputSearch(e.target.value, 'movie')}
       />
-      {searchMoviesError ? (
-        <>Oh no, there was an error</>
-      ) : searchMoviesIsLoading ? (
-        <>Loading...</>
-      ) : searchMoviesData?.results ? (
+      {searchMoviesIsLoading && searchSeriesIsLoading && <>Loading...</>}
+      {previousSearch && (
+        <>
+          {previousSearch.movies.map((movie, index) => (
+            <Link key={index} to={`/info/movie/${movie.id}`}>
+              <p>{movie.original_title}</p>
+            </Link>
+          ))}
+          {previousSearch.series.map((serie, index) => (
+            <Link key={index} to={`/info/tv/${serie.id}`}>
+              <p>{serie.name}</p>
+            </Link>
+          ))}
+        </>
+      )}
+      _________________
+      {searchMoviesError ? null : searchMoviesData?.results ? (
         <>
           {searchMoviesData.results.map((movie, index) => (
             <h4 key={index}>{movie.original_title}</h4>
