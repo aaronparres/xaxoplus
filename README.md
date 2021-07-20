@@ -1,5 +1,5 @@
 # XAXOPLUS 
-## (TMDB API) + React (TypeScript) + [Redux Toolkit](https://https://xaxoplus.vercel.app/)
+## (TMDB API) + React (TypeScript) + [Redux Toolkit](https://https://xaxoplus.vercel.app/) + SASS
 
 Hosted on Vercel:  [xaxoplus.vercel.app](https://https://xaxoplus.vercel.app/)
 
