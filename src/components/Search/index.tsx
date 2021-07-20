@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 import {
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
@@ -14,11 +12,17 @@ import {
   selectPreviousSearchElements,
 } from 'store/slices/settings';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import MediaElement from 'components/MediaElement';
+
+import defaultPoster from 'assets/images/default-poster.png';
+
+import styles from './styles.module.scss';
 
 export default function Search() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [searchQuery, setSearchQuery] = useState('');
+  const [hidePrevious, setHidePrevious] = useState(false);
   const previousSearch = useAppSelector(selectPreviousSearchElements);
 
   useEffect(() => window.scrollTo(0, 0), []);
@@ -45,6 +49,7 @@ export default function Search() {
     setSearchQuery(inputQuery);
     triggerSearchMovies(inputQuery);
     triggerSearchSeries(inputQuery);
+    setHidePrevious(true);
   };
 
   const handleSearchMovieSelection = (data: MovieResult, type: string) => {
@@ -58,51 +63,80 @@ export default function Search() {
   };
 
   return (
-    <div>
-      <p>search</p>
-      <div onClick={() => history.goBack()}>
-        <FontAwesomeIcon icon={faTimes} size="lg" color="white" />
-      </div>
+    <div className={styles.mainContainer}>
       <input
         type="text"
         value={searchQuery}
-        style={{ color: 'grey' }}
+        placeholder="Search..."
         onChange={e => handleInputSearch(e.target.value)}
       />
       {searchMoviesIsLoading && searchSeriesIsLoading && <Spinner />}
-      {previousSearch && (
-        <>
-          {previousSearch.movies.map((movie, index) => (
-            <Link key={index} to={`/info/movie/${movie.id}`}>
-              <p>{movie.original_title}</p>
-            </Link>
-          ))}
-          {previousSearch.series.map((serie, index) => (
-            <Link key={index} to={`/info/tv/${serie.id}`}>
-              <p>{serie.name}</p>
-            </Link>
-          ))}
-        </>
-      )}
-      _________________
-      {searchMoviesError ? null : searchMoviesData?.results ? (
-        <>
-          {searchMoviesData.results.map((movie, index) => (
-            <div onClick={() => handleSearchMovieSelection(movie, 'movie')} key={index}>
-              <h4>{movie.original_title}</h4>
-            </div>
-          ))}
-        </>
-      ) : null}
-      {searchSeriesError ? null : searchSeriesData?.results ? (
-        <>
-          {searchSeriesData.results.map((serie, index) => (
-            <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
-              <h4>{serie.name}</h4>
-            </div>
-          ))}
-        </>
-      ) : null}
+      {!hidePrevious && <h1>Previous searches</h1>}
+      <div className={styles.imagesContainer}>
+        {!hidePrevious && previousSearch && (
+          <>
+            {previousSearch.movies.map((movie, index) => (
+              <div onClick={() => handleSearchMovieSelection(movie, 'movie')} key={index}>
+                <MediaElement
+                  title={movie.original_title}
+                  image={
+                    movie.poster_path === null
+                      ? defaultPoster
+                      : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                  }
+                />
+              </div>
+            ))}
+            {previousSearch.series.map((serie, index) => (
+              <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
+                <MediaElement
+                  title={serie.name}
+                  image={
+                    serie.poster_path === null
+                      ? defaultPoster
+                      : `https://image.tmdb.org/t/p/w500/${serie.poster_path}`
+                  }
+                />
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+      {searchQuery && <h1>Search for {searchQuery}</h1>}
+      <div className={styles.imagesContainer}>
+        {searchMoviesError ? null : searchMoviesData?.results ? (
+          <>
+            {searchMoviesData.results.map((movie, index) => (
+              <div onClick={() => handleSearchMovieSelection(movie, 'movie')} key={index}>
+                <MediaElement
+                  title={movie.original_title}
+                  image={
+                    movie.poster_path === null
+                      ? defaultPoster
+                      : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                  }
+                />
+              </div>
+            ))}
+          </>
+        ) : null}
+        {searchSeriesError ? null : searchSeriesData?.results ? (
+          <>
+            {searchSeriesData.results.map((serie, index) => (
+              <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
+                <MediaElement
+                  title={serie.name}
+                  image={
+                    serie.poster_path === null
+                      ? defaultPoster
+                      : `https://image.tmdb.org/t/p/w500/${serie.poster_path}`
+                  }
+                />
+              </div>
+            ))}
+          </>
+        ) : null}
+      </div>
     </div>
   );
 }

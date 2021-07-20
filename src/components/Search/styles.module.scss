@@ -1,0 +1,28 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  input {
+    color: #090b13;
+    width: 80%;
+    padding: 15px;
+    font-size: 1.5rem;
+    border-radius: 15px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 2rem;
+  }
+}
+
+.imagesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80%;
+}

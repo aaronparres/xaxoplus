@@ -26,7 +26,7 @@ export const settingsSlice = createSlice({
         movie => movie.id === action.payload.data.id,
       );
       if (isAlreadySaved) return;
-      if (state.previousSearchMovies.length > 4) state.previousSearchMovies.shift();
+      if (state.previousSearchMovies.length > 3) state.previousSearchMovies.shift();
       state.previousSearchMovies.push(action.payload.data);
     },
     saveToPreviousSearchSeries: (state, action: PayloadAction<{ data: TvResult }>) => {
@@ -34,7 +34,7 @@ export const settingsSlice = createSlice({
         serie => serie.id === action.payload.data.id,
       );
       if (isAlreadySaved) return;
-      if (state.previousSearchSeries.length > 4) state.previousSearchSeries.shift();
+      if (state.previousSearchSeries.length > 3) state.previousSearchSeries.shift();
       state.previousSearchSeries.push(action.payload.data);
     },
   },
