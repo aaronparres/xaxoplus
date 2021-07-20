@@ -13,5 +13,9 @@
 
 .content {
   min-height: 1100px;
-  padding-top: 100px;
+  padding-top: 70px;
+
+  @media (min-width: 479px) {
+    padding-top: 100px;
+  }
 }

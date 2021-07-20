@@ -1,3 +1,23 @@
+.closeButton {
+  text-decoration: none;
+
+  p {
+    font-size: 1.5rem;
+    text-align: right;
+    padding-right: 2rem;
+
+    span {
+      margin-left: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    p {
+      font-size: 2rem;
+    }
+  }
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;
@@ -14,9 +34,15 @@
   }
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 800;
     margin-top: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    h1 {
+      font-size: 2.5rem;
+    }
   }
 }
 

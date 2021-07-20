@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import ReactStars from 'react-stars';
 
 import MediaElement from 'components/MediaElement';
@@ -45,6 +48,14 @@ export default function Info({
 
   return (
     <>
+      <Link to="/" className={styles.goBackButton}>
+        <p>
+          <span>
+            <FontAwesomeIcon icon={faChevronLeft} color="white" />
+          </span>
+          Go back
+        </p>
+      </Link>
       <div className={styles.infoContainer}>
         <img src={image} alt={title} />
         <div className={styles.info}>

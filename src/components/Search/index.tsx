@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
@@ -63,80 +65,95 @@ export default function Search() {
   };
 
   return (
-    <div className={styles.mainContainer}>
-      <input
-        type="text"
-        value={searchQuery}
-        placeholder="Search..."
-        onChange={e => handleInputSearch(e.target.value)}
-      />
-      {searchMoviesIsLoading && searchSeriesIsLoading && <Spinner />}
-      {!hidePrevious && <h1>Previous searches</h1>}
-      <div className={styles.imagesContainer}>
-        {!hidePrevious && previousSearch && (
-          <>
-            {previousSearch.movies.map((movie, index) => (
-              <div onClick={() => handleSearchMovieSelection(movie, 'movie')} key={index}>
-                <MediaElement
-                  title={movie.original_title}
-                  image={
-                    movie.poster_path === null
-                      ? defaultPoster
-                      : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                  }
-                />
-              </div>
-            ))}
-            {previousSearch.series.map((serie, index) => (
-              <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
-                <MediaElement
-                  title={serie.name}
-                  image={
-                    serie.poster_path === null
-                      ? defaultPoster
-                      : `https://image.tmdb.org/t/p/w500/${serie.poster_path}`
-                  }
-                />
-              </div>
-            ))}
-          </>
-        )}
+    <>
+      <Link to="/" className={styles.closeButton}>
+        <p>
+          <span>
+            <FontAwesomeIcon icon={faTimes} color="white" />
+          </span>
+        </p>
+      </Link>
+      <div className={styles.mainContainer}>
+        <input
+          type="text"
+          value={searchQuery}
+          placeholder="Search..."
+          onChange={e => handleInputSearch(e.target.value)}
+        />
+        {searchMoviesIsLoading && searchSeriesIsLoading && <Spinner />}
+        {!hidePrevious && <h1>Previous searches</h1>}
+        <div className={styles.imagesContainer}>
+          {!hidePrevious && previousSearch && (
+            <>
+              {previousSearch.movies.map((movie, index) => (
+                <div
+                  onClick={() => handleSearchMovieSelection(movie, 'movie')}
+                  key={index}
+                >
+                  <MediaElement
+                    title={movie.original_title}
+                    image={
+                      movie.poster_path === null
+                        ? defaultPoster
+                        : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                    }
+                  />
+                </div>
+              ))}
+              {previousSearch.series.map((serie, index) => (
+                <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
+                  <MediaElement
+                    title={serie.name}
+                    image={
+                      serie.poster_path === null
+                        ? defaultPoster
+                        : `https://image.tmdb.org/t/p/w500/${serie.poster_path}`
+                    }
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+        {searchQuery && <h1>Search for {searchQuery}</h1>}
+        <div className={styles.imagesContainer}>
+          {searchMoviesError ? null : searchMoviesData?.results ? (
+            <>
+              {searchMoviesData.results.map((movie, index) => (
+                <div
+                  onClick={() => handleSearchMovieSelection(movie, 'movie')}
+                  key={index}
+                >
+                  <MediaElement
+                    title={movie.original_title}
+                    image={
+                      movie.poster_path === null
+                        ? defaultPoster
+                        : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                    }
+                  />
+                </div>
+              ))}
+            </>
+          ) : null}
+          {searchSeriesError ? null : searchSeriesData?.results ? (
+            <>
+              {searchSeriesData.results.map((serie, index) => (
+                <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
+                  <MediaElement
+                    title={serie.name}
+                    image={
+                      serie.poster_path === null
+                        ? defaultPoster
+                        : `https://image.tmdb.org/t/p/w500/${serie.poster_path}`
+                    }
+                  />
+                </div>
+              ))}
+            </>
+          ) : null}
+        </div>
       </div>
-      {searchQuery && <h1>Search for {searchQuery}</h1>}
-      <div className={styles.imagesContainer}>
-        {searchMoviesError ? null : searchMoviesData?.results ? (
-          <>
-            {searchMoviesData.results.map((movie, index) => (
-              <div onClick={() => handleSearchMovieSelection(movie, 'movie')} key={index}>
-                <MediaElement
-                  title={movie.original_title}
-                  image={
-                    movie.poster_path === null
-                      ? defaultPoster
-                      : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                  }
-                />
-              </div>
-            ))}
-          </>
-        ) : null}
-        {searchSeriesError ? null : searchSeriesData?.results ? (
-          <>
-            {searchSeriesData.results.map((serie, index) => (
-              <div onClick={() => handleSearchSerieSelection(serie, 'tv')} key={index}>
-                <MediaElement
-                  title={serie.name}
-                  image={
-                    serie.poster_path === null
-                      ? defaultPoster
-                      : `https://image.tmdb.org/t/p/w500/${serie.poster_path}`
-                  }
-                />
-              </div>
-            ))}
-          </>
-        ) : null}
-      </div>
-    </div>
+    </>
   );
 }
