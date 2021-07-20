@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import ReactStars from 'react-stars';
 
 import MediaElement from 'components/MediaElement';
+import GoBackButton from 'components/UI/GoBackButton';
 import { MovieResult, TvResult } from 'models/tmdb.model';
 
 import defaultPoster from 'assets/images/default-poster.png';
@@ -48,14 +46,7 @@ export default function Info({
 
   return (
     <>
-      <Link to="/" className={styles.goBackButton}>
-        <p>
-          <span>
-            <FontAwesomeIcon icon={faChevronLeft} color="white" />
-          </span>
-          Go back
-        </p>
-      </Link>
+      <GoBackButton />
       <div className={styles.infoContainer}>
         <img src={image} alt={title} />
         <div className={styles.info}>

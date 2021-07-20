@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
+
+import Spinner from 'components/UI/Spinner';
+import MediaElement from 'components/MediaElement';
+import CloseButton from 'components/UI/CloseButton';
+
 import {
   useLazyGetSearchMoviesQuery,
   useLazyGetSearchSeriesQuery,
 } from 'store/apis/tmdb';
-import Spinner from 'components/UI/Spinner';
 import { MovieResult, TvResult } from 'models/tmdb.model';
 import {
   saveToPreviousSearchMovies,
@@ -14,7 +16,6 @@ import {
   selectPreviousSearchElements,
 } from 'store/slices/settings';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import MediaElement from 'components/MediaElement';
 
 import defaultPoster from 'assets/images/default-poster.png';
 
@@ -66,13 +67,7 @@ export default function Search() {
 
   return (
     <>
-      <Link to="/" className={styles.closeButton}>
-        <p>
-          <span>
-            <FontAwesomeIcon icon={faTimes} color="white" />
-          </span>
-        </p>
-      </Link>
+      <CloseButton />
       <div className={styles.mainContainer}>
         <input
           type="text"
