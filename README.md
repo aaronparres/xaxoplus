@@ -1,6 +1,7 @@
-# XAXOPLUS project (TMDB API) + React (TypeScript) + Redux (Toolkit)
+# XAXOPLUS 
+## (TMDB API) + React (TypeScript) + [Redux Toolkit](https://https://xaxoplus.vercel.app/)
 
-Hosted on:  [XAXOPLUS Vercel](https://https://xaxoplus.vercel.app/)
+Hosted on Vercel:  [xaxoplus.vercel.app](https://https://xaxoplus.vercel.app/)
 
 CI/CD workflow with Github Actions (ci.yml) + Vercel deploy configuration.
 
