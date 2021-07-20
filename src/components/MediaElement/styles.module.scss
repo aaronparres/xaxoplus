@@ -8,11 +8,7 @@
   border: 2px solid #38446e;
   box-shadow: 0 14px 19px -3px rgba(9, 11, 19, 0.26);
 
-  @media (min-width: 711px) {
-    width: 20rem;
-  }
-
-  @media (min-width: 871px) {
+  @media (min-width: 1024px) {
     width: 25rem;
   }
 

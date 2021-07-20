@@ -8,9 +8,16 @@
   input {
     color: #090b13;
     width: 80%;
-    padding: 15px;
-    font-size: 1.5rem;
+    padding: 10px;
+    font-size: 1.2rem;
     border-radius: 15px;
+  }
+
+  @media (min-width: 768px) {
+    input {
+      padding: 15px;
+      font-size: 1.5rem;
+    }
   }
 
   h1 {
@@ -30,5 +37,5 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 80%;
+  width: 100%;
 }
