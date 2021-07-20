@@ -7,6 +7,7 @@ import {
   useLazyGetSimilarSeriesQuery,
 } from 'store/apis/tmdb';
 import Spinner from 'components/UI/Spinner';
+import GoBackButton from 'components/UI/GoBackButton';
 import Info from './Info';
 
 import defaultPoster from 'assets/images/default-poster.png';
@@ -63,6 +64,7 @@ export default function MediaInfo() {
 
   return (
     <div className={styles.container}>
+      <GoBackButton />
       {(media_type === 'movie' && movieError) || movieSimilarError ? (
         <>Oh no, there was an error</>
       ) : movieIsLoading && movieSimilarIsLoading ? (

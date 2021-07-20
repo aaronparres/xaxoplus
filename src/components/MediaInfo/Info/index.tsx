@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 import ReactStars from 'react-stars';
 
 import MediaElement from 'components/MediaElement';
-import GoBackButton from 'components/UI/GoBackButton';
 import { MovieResult, TvResult } from 'models/tmdb.model';
 
 import defaultPoster from 'assets/images/default-poster.png';
@@ -46,7 +45,6 @@ export default function Info({
 
   return (
     <>
-      <GoBackButton />
       <div className={styles.infoContainer}>
         <img src={image} alt={title} />
         <div className={styles.info}>
@@ -63,9 +61,7 @@ export default function Info({
           <p>{overview}</p>
         </div>
       </div>
-      <h1 style={{ textAlign: 'center', marginTop: '5rem', fontSize: '2rem' }}>
-        You should also like...
-      </h1>
+      <h1 className={styles.midTitle}>You should also like...</h1>
       <div className={styles.similarsContainer}>
         {movieRecomendations &&
           movieRecomendations?.map((movie, index) => (
